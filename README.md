@@ -30,7 +30,7 @@ docker build -t paul91/varnish .
 It is recommended that you either mount the container's `/var/log/varnish` directory to the host machine or another container (i.e LogStash) to fully take advantage of the NCSA logging.
 
 ```
-docker run -d -p 80:80 -v /tmp/varnish:/var/log/varnish paul91/varnish
+docker run -i -t -p 80:80 -v /tmp/varnish:/var/log/varnish paul91/varnish
 ```
 
 You can also mount a custom `default.vcl` using Docker volumes.
@@ -40,6 +40,18 @@ docker run -d -p 80:80 \
   -v /tmp/varnish/:/var/log/varnish \
   paul91/varnish
 ```
+
+### Available environment variables
+
+Setting any of the following environment variables with `-e` will override the defaults set in the `Dockerfile` when Varnish is started. If you would like to add additional parameters, please open a Pull Request.
+
+#### Varnishd
+
+* `VARNISH_TTL`: Specifies a hard minimum time to live for cached documents. This is a shortcut for specifying the default_ttl run-time parameter. Default: 60
+
+#### Varnishncsa
+
+* `VARNISHNCSA_LOGFORMAT`: Specify the log format used. If no format is specified the default log format is used. Default: `%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i"`
 
 ### Killing the container
 

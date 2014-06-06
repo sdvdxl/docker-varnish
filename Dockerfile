@@ -7,7 +7,15 @@ RUN yum install -y varnish supervisor
 # Expose port 80
 EXPOSE 80
 
+# Varnishd environment variables
+ENV VARNISH_TTL 60
+
+# Varnishncsa environment variables
+ENV VARNISHNCSA_LOGFORMAT %h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i
+
 ADD default.vcl /etc/varnish/default.vcl
 ADD supervisord.conf /etc/supervisord.conf
 
-CMD ["/usr/bin/supervisord"]
+ADD start.sh /srv/start.sh
+RUN chmod 755 /srv/start.sh
+CMD ["/srv/start.sh"]
