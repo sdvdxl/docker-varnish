@@ -6,6 +6,7 @@ RUN yum install -y varnish supervisor
 
 # Expose port 80
 EXPOSE 80
+EXPOSE 6082
 
 # Varnishd environment variables
 ENV VARNISH_TTL 60
